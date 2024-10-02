@@ -3,6 +3,7 @@ import cors from 'cors';
 import { envVars } from './envVars.config';
 import morganMiddleware from '../middlewares/morgan.middleware';
 import { errorHandler } from '../middlewares/errorHandler.middleware';
+import { unknownEndpoint } from '../middlewares/unknownEndpoints.middleware';
 
 const app: Express = express();
 app.disable('x-powered-by');
@@ -13,6 +14,7 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 app.use(express.json());
+app.use(unknownEndpoint);
 app.use(errorHandler);
 app.use(morganMiddleware()); //for logging http requests
 
