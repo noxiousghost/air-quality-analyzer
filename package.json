@@ -1,0 +1,49 @@
+{
+  "name": "air-quality-analyzer",
+  "version": "0.0.1",
+  "description": "an express application with mongodb",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node ./dist/index.js",
+    "dev": "nodemon --files ./src/index.ts",
+    "prettier": "prettier --write \"src/**/*.ts\"",
+    "prettier:check": "prettier --check \"src/**/*.ts\"",
+    "lint": "eslint --ignore-path .eslintignore \"src/**/*.ts\" --fix",
+    "lint:check": "eslint --ignore-path .eslintignore \"src/**/*.ts\"",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky"
+  },
+  "lint-staged": {
+    "src/**/*.{ts,tsx,js,jsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "src/**/*.{json,css,md,mjs}": [
+      "prettier --write"
+    ]
+  },
+  "author": "Narayan Sapkota",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/dotenv": "^8.2.0",
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.7.4",
+    "@typescript-eslint/eslint-plugin": "^8.3.0",
+    "@typescript-eslint/parser": "^8.3.0",
+    "eslint": "^8.57.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-import": "^2.29.1",
+    "husky": "^9.1.6",
+    "lint-staged": "^15.2.10",
+    "prettier": "^3.3.3",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.6.2"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.21.0"
+  }
+}
