@@ -3,7 +3,19 @@ import mongoose, { Document, Schema } from 'mongoose';
 export interface IAir extends Document {
   aqi: number;
   day: number;
-  month: string;
+  month:
+    | 'jan'
+    | 'feb'
+    | 'mar'
+    | 'apr'
+    | 'may'
+    | 'jun'
+    | 'jul'
+    | 'aug'
+    | 'sep'
+    | 'oct'
+    | 'nov'
+    | 'dec';
   year: number;
   savedDate: Date;
 }
@@ -11,7 +23,26 @@ export interface IAir extends Document {
 const airSchema = new Schema<IAir>({
   aqi: { type: Number, required: true, min: 1, max: 500 },
   day: { type: Number, required: true, min: 1, max: 31 },
-  month: { type: String, required: true, minlength: 3, maxlength: 3 },
+  month: {
+    type: String,
+    required: true,
+    enum: [
+      'jan',
+      'feb',
+      'mar',
+      'apr',
+      'may',
+      'jun',
+      'jul',
+      'aug',
+      'sep',
+      'oct',
+      'nov',
+      'dec',
+    ],
+    minlength: 3,
+    maxlength: 3,
+  },
   year: { type: Number, required: true, min: 1000, max: 9999 },
   savedDate: { type: Date, required: true, default: Date.now },
 });
