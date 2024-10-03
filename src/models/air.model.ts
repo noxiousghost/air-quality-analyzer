@@ -1,21 +1,8 @@
 import mongoose, { Document, Schema } from 'mongoose';
-
 export interface IAir extends Document {
   aqi: number;
   day: number;
-  month:
-    | 'jan'
-    | 'feb'
-    | 'mar'
-    | 'apr'
-    | 'may'
-    | 'jun'
-    | 'jul'
-    | 'aug'
-    | 'sep'
-    | 'oct'
-    | 'nov'
-    | 'dec';
+  month: string;
   year: number;
   savedDate: Date;
 }
@@ -46,6 +33,7 @@ const airSchema = new Schema<IAir>({
   year: { type: Number, required: true, min: 1000, max: 9999 },
   savedDate: { type: Date, required: true, default: Date.now },
 });
+
 airSchema.set('toJSON', {
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id.toString();
