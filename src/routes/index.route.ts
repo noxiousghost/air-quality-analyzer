@@ -1,7 +1,7 @@
-import { test } from '../controllers/test.controller';
 import { Router } from 'express';
+import airRouter from './air.route';
 
 const router = Router();
-router.use('/', test);
+router.use('/air', airRouter);
 
 export default router;
