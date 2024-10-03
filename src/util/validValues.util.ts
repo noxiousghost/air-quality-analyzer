@@ -12,7 +12,6 @@ type ValidMonth =
   | 'nov'
   | 'dec';
 
-// Helper function to check if a string is a valid month
 export const isValidMonth = (month: string): month is ValidMonth => {
   const validMonths: ValidMonth[] = [
     'jan',
@@ -29,4 +28,8 @@ export const isValidMonth = (month: string): month is ValidMonth => {
     'dec',
   ];
   return validMonths.includes(month as ValidMonth);
+};
+
+export const isValidAqi = (aqi: number): boolean => {
+  return aqi >= 1 && aqi <= 500;
 };
