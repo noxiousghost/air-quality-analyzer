@@ -1,7 +1,8 @@
 import Air, { IAir } from '../models/air.model';
 import { AppError } from '../middlewares/errorHandler.middleware';
 import logger from '../configs/logger.config';
-import { isValidAqi, isValidMonth } from '../util/validValues.util';
+import { ValidValuesUtil } from '../util/validValues.util';
+
 export const getAllReport = async () => {
   const result = await Air.find({});
   if (!result) {
@@ -12,13 +13,24 @@ export const getAllReport = async () => {
 
 export const saveReport = async (airData: IAir) => {
   const { aqi, day, month, year, savedDate } = airData;
-  const normalizedMonth = month.toLowerCase();
-  if (!isValidMonth(normalizedMonth)) {
+  const normalizedMonth = ValidValuesUtil.normalizeMonth(month);
+
+  if (!normalizedMonth) {
     throw new AppError('Invalid month', 400);
   }
-  if (!isValidAqi(aqi)) {
-    throw new AppError('Invalid AQI value', 400);
+
+  if (!ValidValuesUtil.isValidAqi(aqi)) {
+    throw new AppError('Invalid AQI', 400);
   }
+
+  if (!ValidValuesUtil.isValidDayForMonth(day, normalizedMonth, year)) {
+    throw new AppError('Invalid Day', 400);
+  }
+
+  if (!ValidValuesUtil.isValidYear(year)) {
+    throw new AppError('Invalid Year', 400);
+  }
+
   if (
     (await Air.findOne({ day })) &&
     (await Air.findOne({ month: normalizedMonth })) &&
@@ -26,6 +38,7 @@ export const saveReport = async (airData: IAir) => {
   ) {
     throw new AppError('Details for that particular date already exists', 400);
   }
+
   const air = new Air({
     aqi,
     day,
