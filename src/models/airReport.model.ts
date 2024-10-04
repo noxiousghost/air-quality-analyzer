@@ -1,5 +1,5 @@
 import mongoose, { Document, Schema } from 'mongoose';
-export interface IAir extends Document {
+export interface IAirReport extends Document {
   aqi: number;
   day: number;
   month: string;
@@ -7,7 +7,7 @@ export interface IAir extends Document {
   savedDate: Date;
 }
 
-const airSchema = new Schema<IAir>({
+const airReportSchema = new Schema<IAirReport>({
   aqi: { type: Number, required: true, min: 1, max: 500 },
   day: { type: Number, required: true, min: 1, max: 31 },
   month: {
@@ -34,7 +34,7 @@ const airSchema = new Schema<IAir>({
   savedDate: { type: Date, required: true, default: Date.now },
 });
 
-airSchema.set('toJSON', {
+airReportSchema.set('toJSON', {
   transform: (document, returnedObject) => {
     returnedObject.id = returnedObject._id.toString();
     delete returnedObject._id;
@@ -42,5 +42,5 @@ airSchema.set('toJSON', {
   },
 });
 
-const Air = mongoose.model<IAir>('Air', airSchema);
-export default Air;
+const AirReport = mongoose.model<IAirReport>('Air_Reports', airReportSchema);
+export default AirReport;

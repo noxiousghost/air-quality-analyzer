@@ -1,7 +1,7 @@
 import { Router } from 'express';
-import airRouter from './air.route';
+import airReportRouter from './airReport.route';
 
 const router = Router();
-router.use('/air', airRouter);
+router.use('/reports', airReportRouter);
 
 export default router;

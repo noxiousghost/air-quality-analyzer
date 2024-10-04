@@ -10,7 +10,6 @@ export const allReport = async (
     const air = await AirService.getAllReport();
     res.status(200).json(air);
   } catch (error) {
-    console.log('fuckkkkk');
     next(error);
   }
 };
@@ -21,8 +20,8 @@ export const createReport = async (
   next: NextFunction,
 ) => {
   try {
-    await AirService.saveReport(req.body);
-    res.status(201).json({ message: 'report created successfully' });
+    const result = await AirService.saveReport(req.body);
+    res.status(201).json({ message: 'report created successfully', result });
   } catch (error) {
     next(error);
   }
