@@ -1,16 +1,18 @@
 import AirReport from '../models/airReport.model';
 import logger from '../configs/logger.config';
-// Generate fake data for 31 days of October 2024
 export const seedAirReportData = async () => {
   const airReports = [];
-
+  // change value for max day with respect to month i.e. 28 for feb and so on
   for (let day = 1; day <= 31; day++) {
     const aqi = Math.floor(Math.random() * (499 - 1 + 1)) + 1;
     const savedDate = new Date();
     const airReport = {
       aqi: aqi,
       day: day,
+      //change to any valid month
+      //should only be the first three letters of a month's name in lowercase
       month: 'oct',
+      // change to any valid year
       year: 2024,
       savedDate: savedDate.toISOString(),
     };
