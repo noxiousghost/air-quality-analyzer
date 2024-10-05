@@ -12,7 +12,8 @@
     "lint": "eslint --ignore-path .eslintignore \"src/**/*.ts\" --fix",
     "lint:check": "eslint --ignore-path .eslintignore \"src/**/*.ts\"",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "prepare": "husky"
+    "prepare": "husky",
+    "seed": "nodemon --files ./src/seed/runSeed.ts"
   },
   "lint-staged": {
     "src/**/*.{ts,tsx,js,jsx}": [
