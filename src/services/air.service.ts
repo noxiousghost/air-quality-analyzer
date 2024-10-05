@@ -53,3 +53,93 @@ export const saveReport = async (airData: IAirReport) => {
   logger.info(`New report created`);
   return result;
 };
+
+export const monthlyReport = async (queries: {
+  month: string;
+  year: string;
+}) => {
+  const { month, year } = queries;
+  if (
+    !month ||
+    !year ||
+    typeof month !== 'string' ||
+    typeof year !== 'string'
+  ) {
+    throw new AppError('Month and year are required.', 400);
+  }
+
+  const numericYear = parseInt(year, 10);
+  if (isNaN(numericYear)) {
+    throw new AppError('Invalid year format.', 400);
+  }
+
+  const aggregationPipeline = [
+    {
+      $match: {
+        month: month.toLowerCase(),
+        year: numericYear,
+      },
+    },
+    {
+      $group: {
+        _id: null,
+        avg: { $avg: '$aqi' },
+        max: { $max: '$aqi' },
+        min: { $min: '$aqi' },
+        list: {
+          $push: {
+            date: {
+              $dateToString: {
+                format: '%d/%m/%Y',
+                date: {
+                  $dateFromParts: {
+                    year: '$year',
+                    month: {
+                      $indexOfArray: [
+                        [
+                          'jan',
+                          'feb',
+                          'mar',
+                          'apr',
+                          'may',
+                          'jun',
+                          'jul',
+                          'aug',
+                          'sep',
+                          'oct',
+                          'nov',
+                          'dec',
+                        ],
+                        '$month',
+                      ],
+                    },
+                    day: '$day',
+                  },
+                },
+              },
+            },
+            aqi: '$aqi',
+          },
+        },
+      },
+    },
+    {
+      $project: {
+        _id: 0,
+        month: { $toLower: month },
+        year: numericYear,
+        avg: { $round: ['$avg', 0] },
+        max: 1,
+        min: 1,
+        list: { $sortArray: { input: '$list', sortBy: { date: 1 } } },
+      },
+    },
+  ];
+
+  const result = await AirReport.aggregate(aggregationPipeline);
+  if (result.length === 0) {
+    throw new AppError("No data found for this month and year'.", 404);
+  }
+
+  return result[0];
+};

@@ -26,3 +26,17 @@ export const createReport = async (
     next(error);
   }
 };
+
+export const getMonthlyReport = async (
+  req: Request,
+  res: Response,
+  next: NextFunction,
+) => {
+  try {
+    const { month, year } = req.query as { month: string; year: string };
+    const result = await AirService.monthlyReport({ month, year });
+    res.status(200).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
