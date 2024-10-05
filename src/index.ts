@@ -9,11 +9,11 @@ import DbConnection from './configs/db.config';
 
 const port = envVars.PORT;
 DbConnection();
+app.use(morganMiddleware()); //for logging http requests
 app.use('/api', routes);
 // if a particular endpoint is not found in above route then this middleware throws error
 app.use(unknownEndpoint);
 app.use(errorHandler);
-app.use(morganMiddleware()); //for logging http requests
 
 app.listen(port, () => {
   logger.info(`App listening on port ${port}`);
