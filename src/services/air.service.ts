@@ -102,6 +102,7 @@ export const monthlyReport = async (queries: {
                     month: {
                       $indexOfArray: [
                         [
+                          '',
                           'jan',
                           'feb',
                           'mar',
