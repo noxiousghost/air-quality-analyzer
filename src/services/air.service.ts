@@ -68,15 +68,20 @@ export const monthlyReport = async (queries: {
     throw new AppError('Month and year are required.', 400);
   }
 
+  const normalizedMonth = ValidValuesUtil.normalizeMonth(month);
+  if (!normalizedMonth) {
+    throw new AppError('Invalid month format.', 400);
+  }
+
   const numericYear = parseInt(year, 10);
-  if (isNaN(numericYear)) {
+  if (!ValidValuesUtil.isValidYear(numericYear)) {
     throw new AppError('Invalid year format.', 400);
   }
 
   const aggregationPipeline = [
     {
       $match: {
-        month: month.toLowerCase(),
+        month: normalizedMonth,
         year: numericYear,
       },
     },
@@ -126,7 +131,7 @@ export const monthlyReport = async (queries: {
     {
       $project: {
         _id: 0,
-        month: { $toLower: month },
+        month: normalizedMonth,
         year: numericYear,
         avg: { $round: ['$avg', 0] },
         max: 1,
