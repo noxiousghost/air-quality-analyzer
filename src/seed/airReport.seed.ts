@@ -11,9 +11,9 @@ export const seedAirReportData = async () => {
       day: day,
       //change to any valid month
       //should only be the first three letters of a month's name in lowercase
-      month: 'oct',
+      month: 'mar',
       // change to any valid year
-      year: 2024,
+      year: 2025,
       savedDate: savedDate.toISOString(),
     };
     airReports.push(airReport);

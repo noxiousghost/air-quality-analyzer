@@ -5,6 +5,8 @@ const airReportRouter = Router();
 
 airReportRouter.get('/', AirReportController.allReport);
 airReportRouter.post('/add', AirReportController.createReport);
-airReportRouter.get('/report', AirReportController.getMonthlyReport); // /report?month=oct&year=2024
+// /aqi?month=oct&year=2024 for monthly report of a year
+//  or /aqi?year=2024 for yearly report showing min, max, and avg aqi
+airReportRouter.get('/aqi', AirReportController.getAQIReport);
 
 export default airReportRouter;

@@ -27,14 +27,14 @@ export const createReport = async (
   }
 };
 
-export const getMonthlyReport = async (
+export const getAQIReport = async (
   req: Request,
   res: Response,
   next: NextFunction,
 ) => {
   try {
     const { month, year } = req.query as { month: string; year: string };
-    const result = await AirService.monthlyReport({ month, year });
+    const result = await AirService.AQIReport({ month, year });
     res.status(200).json(result);
   } catch (error) {
     next(error);
