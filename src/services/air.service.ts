@@ -32,12 +32,14 @@ export const saveReport = async (airData: IAirReport) => {
     throw new AppError('Invalid Year', 400);
   }
 
-  if (
-    (await AirReport.findOne({ day })) &&
-    (await AirReport.findOne({ month: normalizedMonth })) &&
-    (await AirReport.findOne({ year }))
-  ) {
-    throw new AppError('Details for that particular date already exists', 400);
+  const existingReport = await AirReport.findOne({
+    day,
+    month: normalizedMonth,
+    year,
+  });
+
+  if (existingReport) {
+    throw new AppError('Details for that particular date already exist', 400);
   }
 
   const airReport = new AirReport({
