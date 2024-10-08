@@ -1,8 +1,8 @@
 import AirReport, { IAirReport } from '../models/airReport.model';
 import { AppError } from '../middlewares/errorHandler.middleware';
 import logger from '../configs/logger.config';
-import { ValidValuesUtil } from '../util/validValues.util';
-import { Aggregations } from '../util/aggregations.util';
+import { ValidValuesUtil } from '../utils/validValues.util';
+import { Aggregations } from '../utils/aggregations.util';
 
 export const getAllReport = async () => {
   const result = await AirReport.find({});
@@ -30,16 +30,6 @@ export const saveReport = async (airData: IAirReport) => {
 
   if (!ValidValuesUtil.isValidYear(year)) {
     throw new AppError('Invalid Year', 400);
-  }
-
-  const existingReport = await AirReport.findOne({
-    day,
-    month: normalizedMonth,
-    year,
-  });
-
-  if (existingReport) {
-    throw new AppError('Details for that particular date already exist', 400);
   }
 
   const airReport = new AirReport({
