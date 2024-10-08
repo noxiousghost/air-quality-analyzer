@@ -21,6 +21,7 @@ export class Aggregations {
                       month: {
                         $indexOfArray: [
                           [
+                            '',
                             'jan',
                             'feb',
                             'mar',
