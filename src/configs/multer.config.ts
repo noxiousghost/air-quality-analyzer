@@ -46,7 +46,7 @@ const storage = multer.diskStorage({
   },
 });
 
-// for images
+// for csv files
 export const uploadFile = multer({
   storage: storage,
   limits: { fileSize: 1024 * 1024 * 1024 }, // 1 GB limit
