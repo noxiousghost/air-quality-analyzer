@@ -1,12 +1,14 @@
 import { Router } from 'express';
 import * as AirReportController from '../controllers/airReport.controller';
 import { checkExistingReport } from '../middlewares/existingReport.middleware';
+import { rateLimiter } from '../middlewares/rateLimit.middleware';
 
 const airReportRouter = Router();
 
 airReportRouter.get('/', AirReportController.allReport);
 airReportRouter.post(
   '/add',
+  rateLimiter,
   checkExistingReport,
   AirReportController.createReport,
 );
