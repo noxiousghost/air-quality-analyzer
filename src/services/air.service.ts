@@ -9,6 +9,9 @@ export const getAllReport = async () => {
   if (!result) {
     throw new AppError('No reports found', 404);
   }
+  if (result.length === 0) {
+    throw new AppError('No data found', 404);
+  }
   return result;
 };
 
@@ -66,6 +69,7 @@ export const AQIReport = async (queries: {
     let aggregationPipeline;
 
     if (month && typeof month === 'string') {
+      // if month is passed in the url query
       const normalizedMonth = ValidValuesUtil.normalizeMonth(month);
       if (!normalizedMonth) {
         throw new AppError('Invalid month format.', 400);
@@ -75,6 +79,7 @@ export const AQIReport = async (queries: {
         numericYear,
       );
     } else {
+      // if only year is passed
       aggregationPipeline = Aggregations.getYearlyReport(numericYear);
     }
 

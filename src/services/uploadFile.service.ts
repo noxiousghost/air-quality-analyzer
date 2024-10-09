@@ -9,7 +9,10 @@ import fs from 'fs';
 export const findAllFiles = async () => {
   const result = await UploadFile.find({});
   if (!result) {
-    throw new AppError('No Files uploaded yet', 404);
+    throw new AppError('Unknown error', 404);
+  }
+  if (result.length === 0) {
+    throw new AppError("No data found'.", 404);
   }
   return result;
 };
