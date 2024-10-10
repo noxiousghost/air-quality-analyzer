@@ -30,7 +30,7 @@ const fileFilter = (
 // Storage configuration
 const storage = multer.diskStorage({
   destination: function (req: FileRequest, file: Express.Multer.File, cb) {
-    const uploadPath = path.join('public', 'uploads');
+    const uploadPath = path.join('', 'uploads');
     fs.promises
       .mkdir(uploadPath, { recursive: true })
       .then(() => cb(null, uploadPath))
