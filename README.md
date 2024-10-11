@@ -11,7 +11,7 @@ This project is the backend service for an IoT-based air quality monitoring devi
 - Generate a monthly report including:
   - Average AQI
   - Maximum and Minimum AQI
-  - List of daily measured AQI for a specific month
+  - List of daily measured AQI
 - Generate a yearly report including:
   - Average AQI
   - Maximum and Minimum AQI
@@ -135,6 +135,6 @@ This project is the backend service for an IoT-based air quality monitoring devi
 ## To-Do
 
 - Implement Swagger for better API documentation
-- Optimize and clean the code across the project
+- Add UI for easier interaction
 - Write unit tests
-- Switch to PostgreSQL Database from MongoDB (imp)
+- Switch to PostgreSQL Database from MongoDB
