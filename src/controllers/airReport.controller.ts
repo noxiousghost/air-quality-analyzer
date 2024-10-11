@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import * as AirService from '../services/air.service';
+import * as AirService from '../services/airReport.service';
 
 export const allReport = async (
   req: Request,
