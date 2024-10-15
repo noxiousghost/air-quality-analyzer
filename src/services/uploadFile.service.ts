@@ -26,7 +26,8 @@ export const findFileById = async (id: string) => {
 
 export const uploadFile = async (
   fileData: IUploadFile,
-  file: Express.Multer.File,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  file: any,
 ) => {
   let filePath;
   const { path } = file;
