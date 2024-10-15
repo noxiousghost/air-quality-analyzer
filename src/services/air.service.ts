@@ -7,7 +7,7 @@ import { Aggregations } from '../utils/aggregations.util';
 export const getAllReport = async () => {
   const result = await AirReport.find({});
   if (!result) {
-    throw new AppError('No reports found', 404);
+    throw new AppError('Unknown Error', 400);
   }
   if (result.length === 0) {
     throw new AppError('No data found', 404);

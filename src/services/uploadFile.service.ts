@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import UploadFile from '../models/uploadFile.model';
 import { AppError } from '../middlewares/errorHandler.middleware';
 import { IUploadFile } from '../models/uploadFile.model';
@@ -25,7 +24,10 @@ export const findFileById = async (id: string) => {
   return result;
 };
 
-export const uploadFile = async (fileData: IUploadFile, file: any) => {
+export const uploadFile = async (
+  fileData: IUploadFile,
+  file: Express.Multer.File,
+) => {
   let filePath;
   const { path } = file;
   if (path) {

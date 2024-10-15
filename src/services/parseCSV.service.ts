@@ -1,10 +1,10 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import fs from 'fs/promises';
 import csv from 'csv-parser';
 import { Readable } from 'stream';
 import AirReport from '../models/airReport.model';
 import { ValidValuesUtil } from '../utils/validValues.util';
 import { AppError } from '../middlewares/errorHandler.middleware';
-import logger from '../configs/logger.config';
 
 interface CSVRow {
   aqi: string;
@@ -45,7 +45,6 @@ export const processCsvAndSaveData = async (
 
     return { success, errors };
   } catch (error) {
-    logger.error('Error processing CSV file:', error);
     throw new AppError('Failed to process CSV file', 500);
   }
 };
@@ -63,7 +62,7 @@ const validateAndSaveRow = async (row: CSVRow): Promise<void> => {
   const numericYear = parseInt(year, 10);
 
   if (!ValidValuesUtil.isValidAqi(numericAqi)) {
-    throw new Error(`Invalid AQI: ${aqi}`);
+    throw new AppError(`Invalid AQI: ${aqi}`, 401);
   }
 
   if (
@@ -73,11 +72,11 @@ const validateAndSaveRow = async (row: CSVRow): Promise<void> => {
       numericYear,
     )
   ) {
-    throw new Error(`Invalid day for month: ${day}`);
+    throw new AppError(`Invalid day for month: ${day}`, 400);
   }
 
   if (!ValidValuesUtil.isValidYear(numericYear)) {
-    throw new Error(`Invalid year: ${year}`);
+    throw new AppError(`Invalid year: ${year}`, 400);
   }
 
   const existingRecord = await AirReport.findOne({
@@ -87,7 +86,10 @@ const validateAndSaveRow = async (row: CSVRow): Promise<void> => {
   });
 
   if (existingRecord) {
-    throw new Error(`Duplicate record for ${normalizedMonth} ${day}, ${year}`);
+    throw new AppError(
+      `Duplicate record for ${normalizedMonth} ${day}, ${year}`,
+      400,
+    );
   }
 
   const airReport = new AirReport({
