@@ -85,7 +85,7 @@ export const AQIReport = async (queries: {
 
     const result = await AirReport.aggregate(aggregationPipeline);
     if (result.length === 0) {
-      throw new AppError("No data found for this period'.", 404);
+      throw new AppError('No data found for this period.', 404);
     }
 
     return result[0];
