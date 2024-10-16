@@ -28,8 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       if (!response.ok) {
-        console.log(response);
-        throw new Error(`${response.statusText} ${response.status}`);
+        throw new Error(`${result.message} ${response.status}`);
       }
     } catch (error) {
       reportResultDiv.textContent = 'Error fetching report: ' + error.message;
