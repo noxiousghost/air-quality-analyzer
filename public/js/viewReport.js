@@ -1,6 +1,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   const viewReportForm = document.getElementById('view-report-form');
   const reportResultDiv = document.getElementById('report-result');
+  const swal = window.swal;
 
   viewReportForm.addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -31,7 +32,12 @@ document.addEventListener('DOMContentLoaded', () => {
         throw new Error(`${result.message} ${response.status}`);
       }
     } catch (error) {
-      reportResultDiv.textContent = 'Error fetching report: ' + error.message;
+      swal({
+        icon: 'error',
+        title: 'Error fetching report',
+        text: error.message,
+      });
+      reportResultDiv.textContent = '';
     }
   });
 
