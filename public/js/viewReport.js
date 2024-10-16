@@ -28,7 +28,8 @@ document.addEventListener('DOMContentLoaded', () => {
       }
 
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        console.log(response);
+        throw new Error(`${response.statusText} ${response.status}`);
       }
     } catch (error) {
       reportResultDiv.textContent = 'Error fetching report: ' + error.message;
@@ -36,11 +37,6 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   function displayReport(data, year, month) {
-    if (!data || typeof data !== 'object') {
-      reportResultDiv.textContent = `No data available for ${month ? month : null} ${year}`;
-      return;
-    }
-
     const averageAQI = data.avg !== undefined ? data.avg.toFixed(2) : 'N/A';
     const maxAQI = data.max !== undefined ? data.max : 'N/A';
     const minAQI = data.min !== undefined ? data.min : 'N/A';

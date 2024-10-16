@@ -54,42 +54,38 @@ export const AQIReport = async (queries: {
   month: string;
   year: string;
 }): Promise<void> => {
-  try {
-    const { month, year } = queries;
+  const { month, year } = queries;
 
-    if (!year || typeof year !== 'string') {
-      throw new AppError('Year is required.', 400);
-    }
-
-    const numericYear = parseInt(year, 10);
-    if (!ValidValuesUtil.isValidYear(numericYear)) {
-      throw new AppError('Invalid year format.', 400);
-    }
-
-    let aggregationPipeline;
-
-    if (month && typeof month === 'string') {
-      // if month is passed in the url query
-      const normalizedMonth = ValidValuesUtil.normalizeMonth(month);
-      if (!normalizedMonth) {
-        throw new AppError('Invalid month format.', 400);
-      }
-      aggregationPipeline = Aggregations.getMonthlyReport(
-        normalizedMonth,
-        numericYear,
-      );
-    } else {
-      // if only year is passed
-      aggregationPipeline = Aggregations.getYearlyReport(numericYear);
-    }
-
-    const result = await AirReport.aggregate(aggregationPipeline);
-    if (result.length === 0) {
-      throw new AppError("No data found for this period'.", 404);
-    }
-
-    return result[0];
-  } catch (error) {
-    throw new AppError(`${error}`, 500);
+  if (!year || typeof year !== 'string') {
+    throw new AppError('Year is required.', 400);
   }
+
+  const numericYear = parseInt(year, 10);
+  if (!ValidValuesUtil.isValidYear(numericYear)) {
+    throw new AppError('Invalid year format.', 400);
+  }
+
+  let aggregationPipeline;
+
+  if (month && typeof month === 'string') {
+    // if month is passed in the url query
+    const normalizedMonth = ValidValuesUtil.normalizeMonth(month);
+    if (!normalizedMonth) {
+      throw new AppError('Invalid month format.', 400);
+    }
+    aggregationPipeline = Aggregations.getMonthlyReport(
+      normalizedMonth,
+      numericYear,
+    );
+  } else {
+    // if only year is passed
+    aggregationPipeline = Aggregations.getYearlyReport(numericYear);
+  }
+
+  const result = await AirReport.aggregate(aggregationPipeline);
+  if (result.length === 0) {
+    throw new AppError("No data found for this period'.", 404);
+  }
+
+  return result[0];
 };
