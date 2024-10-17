@@ -34,8 +34,8 @@ export const saveFile = async (
   next: NextFunction,
 ) => {
   try {
-    await fileService.uploadFile(req.body, req.file);
-    res.status(201).json({ message: 'File Uploaded' });
+    const savedFile = await fileService.uploadFile(req.body, req.file);
+    res.status(201).json({ message: 'File Uploaded', savedFile });
   } catch (error) {
     next(error);
   }
