@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const result = await response.json();
       console.log(result.status);
       swal({
-        icon: result.status ? 'error' : 'success',
+        icon: result.status == 'error' ? 'error' : 'success',
         text: result.message || 'Record created successfully',
       });
     } catch (error) {
