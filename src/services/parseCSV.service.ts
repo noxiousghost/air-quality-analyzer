@@ -19,34 +19,28 @@ export const processCsvAndSaveData = async (
   const results: CSVRow[] = [];
   const errors: string[] = [];
   let success = 0;
+  const fileContent = await fs.readFile(filePath, 'utf-8');
+  await new Promise<void>((resolve, reject) => {
+    Readable.from(fileContent)
+      .pipe(csv())
+      .on('data', (data: CSVRow) => results.push(data))
+      .on('end', () => resolve())
+      .on('error', (error: string) => reject(error));
+  });
 
-  try {
-    const fileContent = await fs.readFile(filePath, 'utf-8');
-    await new Promise<void>((resolve, reject) => {
-      Readable.from(fileContent)
-        .pipe(csv())
-        .on('data', (data: CSVRow) => results.push(data))
-        .on('end', () => resolve())
-        .on('error', (error) => reject(error));
-    });
-
-    for (const row of results) {
-      try {
-        await validateAndSaveRow(row);
-        success++;
-      } catch (error) {
-        if (error instanceof Error) {
-          errors.push(`Row error: ${error.message}`);
-        } else {
-          errors.push('An unknown error occurred');
-        }
+  for (const row of results) {
+    try {
+      await validateAndSaveRow(row);
+      success++;
+    } catch (error) {
+      if (error instanceof Error) {
+        errors.push(`Row error: ${error.message}`);
+      } else {
+        errors.push('An unknown error occurred');
       }
     }
-
-    return { success, errors };
-  } catch (error) {
-    throw new AppError('Failed to process CSV file', 500);
   }
+  return { success, errors };
 };
 
 const validateAndSaveRow = async (row: CSVRow): Promise<void> => {

@@ -17,7 +17,7 @@ export const processCSVFile = async (
       throw new AppError('File not found', 404);
     }
 
-    const filePath = `public${file.file}`;
+    const filePath = `${file.file}`;
     const result = await processCsvAndSaveData(filePath);
 
     res.status(200).json({
