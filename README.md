@@ -131,10 +131,3 @@ This project is the backend service for an IoT-based air quality monitoring devi
    ```bash
    npm run seed
    ```
-
-## To-Do
-
-- Implement Swagger for better API documentation
-- Add UI for easier interaction
-- Write unit tests
-- Switch to PostgreSQL Database from MongoDB
