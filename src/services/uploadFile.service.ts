@@ -32,7 +32,7 @@ export const uploadFile = async (
   let filePath;
   const { path } = file;
   if (path) {
-    filePath = path.replace('public', '');
+    filePath = path.replace('uploads', '');
   }
   const uploadFile = await new UploadFile({
     title: fileData.title,
@@ -51,7 +51,7 @@ export const deleteFile = async (id: string) => {
   if (!fileExists) {
     throw new AppError('File not found', 404);
   }
-  const deletePath = path.join('public', fileExists.file);
+  const deletePath = path.join('uploads', fileExists.file);
   if (fs.existsSync(deletePath)) {
     fs.rmSync(deletePath); // delete the file
   } else {
