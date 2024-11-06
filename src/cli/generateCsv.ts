@@ -4,11 +4,11 @@ import path from 'path';
 
 const program = new Command();
 program
-  .option(
+  .requiredOption(
     '--month <month>',
     'Three-letter month abbreviation (e.g., jan, feb, mar)',
   )
-  .option('--year <year>', 'Four-digit year (e.g., 2011)')
+  .requiredOption('--year <year>', 'Four-digit year (e.g., 2011)')
   .parse(process.argv);
 
 const { month, year } = program.opts<{ month: string; year: string }>();
