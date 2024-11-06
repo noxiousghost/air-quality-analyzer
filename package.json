@@ -13,7 +13,8 @@
     "lint:check": "eslint --ignore-path .eslintignore \"src/**/*.ts\"",
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepare": "husky",
-    "seed": "nodemon --files ./src/seed/runSeed.ts"
+    "seed": "ts-node ./src/seed/runSeed.ts",
+    "generate-csv": "ts-node ./src/cli/generateCsv.ts"
   },
   "lint-staged": {
     "src/**/*.{ts,tsx,js,jsx}": [
@@ -27,6 +28,7 @@
   "author": "Narayan Sapkota",
   "license": "ISC",
   "devDependencies": {
+    "@types/commander": "^2.12.5",
     "@types/cors": "^2.8.17",
     "@types/dotenv": "^8.2.0",
     "@types/express": "^5.0.0",
@@ -45,6 +47,7 @@
     "typescript": "^5.6.2"
   },
   "dependencies": {
+    "commander": "^12.1.0",
     "cors": "^2.8.5",
     "csv-parser": "^3.0.0",
     "dotenv": "^16.4.5",
